@@ -11,13 +11,14 @@ using Loop = std::function<void()>;
 
     void show(int screenWidth,
               int screenHeight,
-              Loop loop) {
-        InitWindow(screenWidth, screenHeight, "Vetor em Raylib");
+              Color color = BLACK,
+              Loop loop = nullptr) {
+        InitWindow(screenWidth, screenHeight, "");
         SetTargetFPS(60);
         while (!WindowShouldClose()) {
             BeginDrawing();
-            ClearBackground(RAYWHITE);
-            loop();
+            ClearBackground(color);
+            if (loop) loop();
             EndDrawing();
         }
         CloseWindow();

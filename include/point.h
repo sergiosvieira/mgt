@@ -27,6 +27,14 @@ namespace Mgt {
         return result;
     }
 
+    Point& operator+=(Point& p,
+                      const Vector<2>& v) {
+        auto& [x, y] = p;
+        x += v[0];
+        y += v[1];
+        return p;
+    }
+
     Type distance(const Point& p1,
                   const Point&p2) {
         auto [x1, y1] = p1;

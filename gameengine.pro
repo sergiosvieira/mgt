@@ -9,10 +9,14 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
+    examples/gravity.h \
+    examples/shoot.h \
+    include/entity.h \
     include/default.h \
     include/draw.h \
     include/linear.h \
     include/matrix.h \
     include/point.h \
+    include/random.h \
     include/vector.h \
     include/window.h

@@ -55,6 +55,22 @@ namespace Mgt {
     }
 
     template<size_t Cols>
+    Vector<Cols>& operator+=(Vector<Cols>& v1,
+                             const Vector<Cols>& v2) {
+        v1[0] += v2[0];
+        v1[1] += v2[1];
+        return v1;
+    }
+
+    template<size_t Cols>
+    Vector<Cols>& operator-=(Vector<Cols>& v1,
+                             const Vector<Cols>& v2) {
+        v1[0] += -v2[0];
+        v1[1] += -v2[1];
+        return v1;
+    }
+
+    template<size_t Cols>
     Vector<Cols> operator-(const Vector<Cols>& v) {
         Vector<Cols> result = v;
         for (size_t i = 0; i < v.size(); ++i) {
