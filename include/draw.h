@@ -16,9 +16,26 @@ namespace Mgt {
         float angle = atan2(dy, dx);
         float endX = sx + dx;
         float endY = sy + dy;
-        DrawLine(sx, sy, static_cast<int>(endX), static_cast<int>(endY), color);
-        DrawLine(static_cast<int>(endX), static_cast<int>(endY), static_cast<int>(endX - 20*cos(angle - PI/6)), static_cast<int>(endY - 20*sin(angle - PI/6)), color);
-        DrawLine(static_cast<int>(endX), static_cast<int>(endY), static_cast<int>(endX - 20*cos(angle + PI/6)), static_cast<int>(endY - 20*sin(angle + PI/6)), color);
+        DrawLineEx({sx, sy}, {static_cast<int>(endX), static_cast<int>(endY)}, 2.f, color);
+        DrawLineEx({static_cast<int>(endX), static_cast<int>(endY)}, {static_cast<int>(endX - 20*cos(angle - PI/6)), static_cast<int>(endY - 20*sin(angle - PI/6))}, 2.f, color);
+        DrawLineEx({static_cast<int>(endX), static_cast<int>(endY)}, {static_cast<int>(endX - 20*cos(angle + PI/6)), static_cast<int>(endY - 20*sin(angle + PI/6))}, 2.f, color);
+    }
+
+    void DrawGrid(size_t rows,
+                  size_t cols,
+                  size_t width,
+                  size_t height,
+                  size_t cellSize,
+                  Color color= { 200, 200, 200, 100 }) {
+        size_t s = 0;
+        for (size_t i = 0; i < rows; ++i) {
+            s = i * cellSize;
+            DrawLine(0, s, width, s, color);
+        }
+        for (size_t i = 0; i < cols; ++i) {
+            s = i * cellSize;
+            DrawLine(s, 0, s, height, color);
+        }
     }
 
 }
