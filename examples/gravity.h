@@ -4,44 +4,33 @@
 #include <vector>
 #include "../include/entity.h"
 #include "../include/random.h"
+#include "../include/draw.h"
 
 using Entities = std::vector<Entity>;
 
-Entities create(size_t size) {
-    Entities r(size);
-    for (size_t i = 0; i < size; ++i) {
-        Entity e(Point{Mgt::random(0, 1024), 768});
-        e.setVelocity({0.f, -13.f * Mgt::random()});
-        e.setAcceleration({0.f, -0.15f * Mgt::random()});
-        e.setUseAcceleration(true);
-        e.setGravity({0.f, -0.01f * Mgt::random()});
-        e.setUseGravity(true);
-        e.setColor(random_color());
-        r.push_back(e);
-    }
-    return r;
-}
-
-void reset(Entity& e) {
-    e.setPosition(Point{Mgt::random(0, 1024), 768});
-    e.setVelocity({0.f, -13.f * Mgt::random()});
-    e.setAcceleration({0.f, -0.15f * Mgt::random()});
-    e.setColor(random_color());
-    e.setRadius(50.f * Mgt::random());
-}
-
 int gravity() {
-    const int larguraTela = 1024;
-    const int alturaTela = 768;
-    Entities es = create(1000);
-    show(larguraTela, alturaTela, BLACK, [&] {
-        for (auto& e: es) {
-            e.draw();
-            e.move();
-            if (e.getY() > alturaTela) {
-                reset(e);
-            }
-        }
+    const int larguraTela = 40 * 25;
+    const int alturaTela = 30 * 25;
+    Mgt::FPS = 1;
+    Entity e({
+        {larguraTela/2, alturaTela/2},
+        {0.0f, -25.f},
+        {12.f, -12.f},
+        {-10.f, 10.f},
+        RAYWHITE,
+        10.f
+    });
+    e.setUseAcceleration(true);
+    e.setUseGravity(true);
+    show(larguraTela, alturaTela, [&]{
+        e.move();
+    }, [&] {
+        Mgt::DrawGrid(40,
+                      40,
+                      larguraTela,
+                      alturaTela,
+                      25);
+        e.draw();
     });
     return 0;
 }

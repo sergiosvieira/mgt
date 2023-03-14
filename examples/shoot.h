@@ -13,7 +13,7 @@ int shoot() {
     float speed = magnitude(v);
     auto u = unit_length(v) * (speed / 100.f);
     Point pontoAtual = pontoInicial;
-    show(larguraTela, alturaTela, BLACK, [&]() {
+    show(larguraTela, alturaTela, [&]() {
         Mgt::DrawVector(v, BLACK, pontoInicial);
         DrawCircle(pontoAtual.first, pontoAtual.second, 5.f, RED);
         int d = static_cast<int>(distance(pontoAtual, pontoFinal));
