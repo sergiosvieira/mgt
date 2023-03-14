@@ -3,7 +3,7 @@ CONFIG += console c++17
 LIBS += -L/usr/local/lib64 -lraylib
 CONFIG -= app_bundle
 CONFIG -= qt
-QMAKE_CXXFLAGS += -march=native -mtune=native -mavx2 -O3
+#QMAKE_CXXFLAGS += -march=native -mtune=native -mavx2 -O3
 
 SOURCES += \
         main.cpp
