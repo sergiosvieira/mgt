@@ -6,19 +6,29 @@
 #include "draw.h"
 #include "random.h"
 #include "raylib.h"
+#include "linear.h"
 
 namespace Mgt {
 
-class Entity {
+struct EntitySettings {
     Point position = {};
-    Vector<2> acceleration = {0.f, 0.f};
     Vector<2> velocity = {0.f, 0.f};
+    Vector<2> acceleration = {0.f, 0.f};
     Vector<2> gravity = {0.f, 0.f};
     Color color = RAYWHITE;
-    float radius = 15.f;
+    float radius = 5.f;
+};
+
+class Entity {
+    Point position = {};
+    Vector<2> velocity = {0.f, 0.f};
+    Vector<2> acceleration = {0.f, 0.f};
+    Vector<2> gravity = {0.f, 0.f};
+    Color color = RAYWHITE;
+    float radius = 5.f;
     bool use_acceleration = false;
     bool use_gravity = false;
-    bool show_vector = false;
+    bool show_vector = true;
 public:
     Entity(){}
     Entity(const Point& position) {
@@ -27,6 +37,13 @@ public:
     Entity(const Color color) {
         this->color = color;
     }
+    Entity(const EntitySettings& settings):
+        position(settings.position),
+        velocity(settings.velocity),
+        acceleration(settings.acceleration),
+        gravity(settings.gravity),
+        color(settings.color),
+        radius(settings.radius){}
     Type getX() const {
         return position.first;
     }
@@ -67,22 +84,29 @@ public:
         this->radius = r;
     }
     virtual void draw() {
-        DrawCircle(getX(), getY(), radius, color);
+        static float m = 50.f;
+        if (show_vector) {
+            Vector<2> fixed = unit_length(velocity) * m;
+            DrawVector(fixed, RED, position);
+        }
         if (use_acceleration
                 && show_vector) {
-            DrawVector(velocity + acceleration, GREEN, position);
+            Vector<2> fixed = unit_length(acceleration) * m;
+            DrawVector(fixed, GREEN, position);
         }
         if (use_gravity
                 && show_vector) {
-            DrawVector(gravity, RED, position);
+            Vector<2> fixed = unit_length(gravity) * m;
+            DrawVector(fixed, BLUE, position);
         }
+        DrawCircle(getX(), getY(), radius, color);
     }
     virtual void move() {
         if (use_acceleration) {
             this->velocity += this->acceleration;
         }
         if (use_gravity) {
-            this->acceleration -= this->gravity;
+            this->velocity += this->gravity;
         }
         this->position += this->velocity;
     }
