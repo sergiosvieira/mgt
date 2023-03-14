@@ -7,18 +7,22 @@
 
 namespace Mgt {
 
-using Loop = std::function<void()>;
+    using Loop = std::function<void()>;
+
+    int FPS = 60;
+    Color BackgroundColod = BLACK;
 
     void show(int screenWidth,
               int screenHeight,
-              Color color = BLACK,
-              Loop loop = nullptr) {
+              Loop update = nullptr,
+              Loop render = nullptr) {
         InitWindow(screenWidth, screenHeight, "");
-        SetTargetFPS(60);
+        SetTargetFPS(FPS);
         while (!WindowShouldClose()) {
+            if (update) update();
             BeginDrawing();
-            ClearBackground(color);
-            if (loop) loop();
+            ClearBackground(BackgroundColod);
+            if (render) render();
             EndDrawing();
         }
         CloseWindow();
