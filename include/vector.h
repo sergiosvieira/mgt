@@ -113,6 +113,7 @@ namespace Mgt {
     Vector<Cols> unit_length(const Vector<Cols>& v) {
         Vector<Cols> result = v;
         float m = magnitude(v);
+        if (isEqual(m, 0.f)) return {0.f, 0.f};
         return result / m;
     }
 }
